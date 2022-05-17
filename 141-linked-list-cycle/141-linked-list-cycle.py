@@ -13,7 +13,7 @@ class Solution(object):
             fast = fast.next.next if fast.next is not None else None
             if fast is None:
                 return False
-            if slow.val == fast.val and slow.next == fast.next:
+            if slow == fast:
                 return True
             
         return False
