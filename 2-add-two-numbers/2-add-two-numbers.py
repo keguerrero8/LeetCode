@@ -8,20 +8,12 @@ class Solution(object):
         sumHead = currentSum = ListNode(None)
         n1 = l1
         n2 = l2
-        rem = 0
-        tempRem = 0
+        rem = tempRem = 0
         
         while n1 or n2:
-            if n1 is None:
-                n1Val = 0
-                n2Val = n2.val
-            elif n2 is None:
-                n2Val = 0
-                n1Val = n1.val
-            else:
-                n2Val = n2.val
-                n1Val = n1.val
-                
+            n1Val = n1.val if n1 else 0
+            n2Val = n2.val if n2 else 0
+            
             sumVal = n1Val + n2Val + rem
             if sumVal > 9:
                 sumVal -= 10
@@ -39,8 +31,8 @@ class Solution(object):
         if rem > 0:
             currentSum.next = ListNode(rem)
         
-        result = sumHead.next
-        sumHead.next = None
+        # result = sumHead.next
+        # sumHead.next = None
         
-        return result
+        return sumHead.next
         
