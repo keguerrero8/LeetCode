@@ -6,33 +6,16 @@
 #         self.right = right
 class Solution(object):
     def inorderTraversal(self, root):
-        traversal = []
+        inOrder = []
         stack = []
         current = root
-        while stack or current:
+        while current or stack:
             while current:
                 stack.append(current)
                 current = current.left
-            current = stack.pop()
-            traversal.append(current.val)
-            current = current.right
-                
-                    
-        return traversal
+            node = stack.pop()
+            inOrder.append(node.val)
+            current = node.right
+            
+        return inOrder
         
-        
-        
-        
-        # def inorderTraversal(self, root, traverse = None):
-        #         if traverse == None:
-        #             traverse = []
-
-        #         if root is None:
-        #             return
-
-        #         self.inorderTraversal(root.left, traverse)
-        #         traverse.append(root.val)
-        #         self.inorderTraversal(root.right, traverse)
-
-        #         return traverse
-    
