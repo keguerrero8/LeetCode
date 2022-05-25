@@ -24,7 +24,6 @@ class Solution(object):
 
         self.findKthSmallestHelper(tree.right, k, treeInfo)
 
-        return treeInfo.kTree
 
 
 class TreeInfo:
