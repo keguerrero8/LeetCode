@@ -1,13 +1,20 @@
 class Solution(object):
     def subsets(self, nums):
-        powerset = [[]]
-        
+        powerSet = [[]]
+        #[1,2,3]
+        #for 1
+            #len = 1, [[], [1]]
+        #for 2
+            #len = 2, [[], [1], [2], [1,2]]
+        #for 3
+            #len = 4, [[], [1], [2], [1,2], [3], [1,3], [2,3], [1,2,3]]
+            
+        #Time and Space is O(n*2^n)
         for num in nums:
-            end = len(powerset)
-            
-            for i in range(end):
-                powerset.append(powerset[i] + [num])
+            length = len(powerSet)
+            for i in range(length):
+                powerSet.append(powerSet[i]+[num])
                 
-        return powerset
-            
+        return powerSet
+        
         
