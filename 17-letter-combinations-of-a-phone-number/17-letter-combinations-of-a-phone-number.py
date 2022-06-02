@@ -13,8 +13,9 @@ class Solution(object):
             return result
 
         for char in mnemonics[phoneNumber[i]]:
-            new = base + [char]
-            self.phoneNumberMnemonicsHelper(i+1, phoneNumber, mnemonics, new, result)
+            base.append(char)
+            self.phoneNumberMnemonicsHelper(i+1, phoneNumber, mnemonics, base, result)
+            base.pop()
 
         return result
         
