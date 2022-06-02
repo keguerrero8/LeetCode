@@ -1,10 +1,5 @@
 class Solution(object):
     def pacificAtlantic(self, heights):
-        #create a pac set and an atlantic set
-        #iterate through first row and first col and perform bfs to mark coordinates that can be reached by pac
-            #during iteration, if coordinate is already in ocean, skip and move to next
-        #iterate through last row and last col and perform bfs to mark coordinates for atl
-        #iterate through heights matrix again, and if coordinates are in both sets, add them to output array
         pac = set()
         atl = set()
         
