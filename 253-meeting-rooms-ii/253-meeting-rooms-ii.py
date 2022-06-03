@@ -17,20 +17,14 @@ class Solution(object):
         
         maxRooms = 1
         currentRooms = 0
-        while i < len(startingTimes) and j < len(endTimes):
+        while i < len(startingTimes):
             if startingTimes[i] < endTimes[j]:
                 currentRooms += 1
-                maxRooms = max(maxRooms, currentRooms)
                 i += 1
             else:
                 currentRooms -= 1
-                maxRooms = max(maxRooms, currentRooms)
                 j += 1
-                
-        if i < len(startingTimes):
-            currentRooms += 1
-            maxRooms = max(maxRooms, currentRooms)
-            i += 1
+            maxRooms = max(maxRooms, currentRooms)  
                 
         return maxRooms
             
