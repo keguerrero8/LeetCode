@@ -1,30 +1,28 @@
 class Solution(object):
     def characterReplacement(self, s, k):
-        start = 0
-        end = 0
-        frequencyHash = {}
+        start, end = 0, 0
+        frequencyHash = {s[0]: 1}
         longest = 1
         
         while end < len(s):
-            window = end-start+1
-            if s[end] not in frequencyHash:
-                frequencyHash[s[end]] = 1
-            else:
-                frequencyHash[s[end]] += 1
-            if window - self.mostFrequent(frequencyHash) <= k:
-                longest = max(longest, window)
-            else:
-                while window - self.mostFrequent(frequencyHash) > k:
-                    frequencyHash[s[start]] -= 1
-                    start += 1
-                    window = end-start+1
-            end += 1
+            currentLength = end - start + 1
+            maxLetterFrequency = self.getMaxLetterFrequency(frequencyHash)
             
+            if currentLength - maxLetterFrequency <= k:
+                longest = max(longest, currentLength)
+                end += 1
+                if end < len(s):
+                    frequencyHash[s[end]] = 1 + frequencyHash.get(s[end], 0)
+            else:
+                frequencyHash[s[start]] -= 1
+                start += 1
+                 
         return longest
-    
-    def mostFrequent(self, hashMap):
-        maxFrequency = 1
-        for frequency in hashMap.values():
-            maxFrequency = max(maxFrequency, frequency)
+                
             
+    def getMaxLetterFrequency(self, frequencyHash):
+        maxFrequency = 0
+        for frequency in frequencyHash.values():
+            maxFrequency = max(maxFrequency, frequency)
         return maxFrequency
+        
