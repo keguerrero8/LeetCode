@@ -17,11 +17,11 @@ class Solution(object):
             else:
                 edgesHash[edge[1]].append(edge[0])
                 
-        isValidTree = self.dfs(0, edgesHash, visiting, visited, -1)
-        if not isValidTree or len(visited) != n:
-            return False
+        # isValidTree = self.dfs(0, edgesHash, visiting, visited, -1)
+        # if not isValidTree or len(visited) != n:
+        #     return False
             
-        return True
+        return self.dfs(0, edgesHash, visiting, visited, -1) and len(visited) == n
     
     
     def dfs(self, node, edgesHash, visiting, visited, prevNode):
