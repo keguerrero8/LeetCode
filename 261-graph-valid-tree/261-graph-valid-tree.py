@@ -1,42 +1,47 @@
 class Solution(object):
     def validTree(self, n, edges):
-        hashEdges = {}
+        if n == 1:
+            return True
+        edgesHash = {}
+        visiting = set()
         visited = set()
         
         for edge in edges:
-            if edge[0] not in hashEdges:
-                hashEdges[edge[0]] = [edge[1]]
+            if edge[0] not in edgesHash:
+                edgesHash[edge[0]] = [edge[1]]
             else:
-                hashEdges[edge[0]].append(edge[1])
+                edgesHash[edge[0]].append(edge[1])
                 
-            if edge[1] not in hashEdges:
-                hashEdges[edge[1]] = [edge[0]]
+            if edge[1] not in edgesHash:
+                edgesHash[edge[1]] = [edge[0]]
             else:
-                hashEdges[edge[1]].append(edge[0])
+                edgesHash[edge[1]].append(edge[0])
                 
+        isValidTree = self.dfs(0, edgesHash, visiting, visited, -1)
+        if not isValidTree or len(visited) != n:
+            return False
             
-        return self.depthFirstSearch(0, hashEdges, visited, None) and len(visited) == n
+        return True
     
     
-    def depthFirstSearch(self, node, hashEdges, visited, prev):
-        if node in visited:
+    def dfs(self, node, edgesHash, visiting, visited, prevNode):
+        if node in visiting or node not in edgesHash:
             return False
         
-        visited.add(node)
+        visiting.add(node)
         
-        if node not in hashEdges:
-            visited.add(node)
+        if node in visited:
+            visiting.remove(node)
             return True
         
-        for neighbor in hashEdges[node]:
-            if neighbor == prev:
+        for neighbor in edgesHash[node]:
+            if neighbor == prevNode:
                 continue
-            isValidTree = self.depthFirstSearch(neighbor, hashEdges, visited, node)
+            isValidTree = self.dfs(neighbor, edgesHash, visiting, visited, node)
             if not isValidTree:
                 return False
             
+        visiting.remove(node)
         visited.add(node)
-        
         return True
-            
         
