@@ -16,10 +16,6 @@ class Solution(object):
                 edgesHash[edge[1]] = [edge[0]]
             else:
                 edgesHash[edge[1]].append(edge[0])
-                
-        # isValidTree = self.dfs(0, edgesHash, visiting, visited, -1)
-        # if not isValidTree or len(visited) != n:
-        #     return False
             
         return self.dfs(0, edgesHash, visiting, visited, -1) and len(visited) == n
     
