@@ -9,18 +9,20 @@ class Solution(object):
         if root is None:
             return False
         
-        if self.isSameTree(root, subRoot):
+        if root.val == subRoot.val and self.isSameTree(root, subRoot):
             return True
-
+        
         return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
         
-    def isSameTree(self, root, subRoot):
-        if root is None and subRoot is None:
+        
+    def isSameTree(self, candidate, subRoot):
+        if candidate is None and subRoot is None:
             return True
+        elif candidate is None or subRoot is None:
+            return False
         
-        if root and subRoot and root.val == subRoot.val:
-            return self.isSameTree(root.left, subRoot.left) and self.isSameTree(root.right, subRoot.right)
+        if candidate.val != subRoot.val:
+            return False
         
-        return False
-        
+        return self.isSameTree(candidate.left, subRoot.left) and self.isSameTree(candidate.right, subRoot.right)
         
