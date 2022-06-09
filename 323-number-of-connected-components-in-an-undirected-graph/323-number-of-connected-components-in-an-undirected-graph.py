@@ -1,43 +1,34 @@
 class Solution(object):
     def countComponents(self, n, edges):
-        if n == 1:
-            return 1
-            
-        edgesHash = {}
+        if n == 1: return 1
         visited = set()
-        numOfConnectedComponents = 0
-        
+        visiting = set()
+        edgesHash = { i:[] for i in range(n) }
         for edge in edges:
-            if edge[0] not in edgesHash:
-                edgesHash[edge[0]] = [edge[1]]
-            else:
-                edgesHash[edge[0]].append(edge[1])
-                
-            if edge[1] not in edgesHash:
-                edgesHash[edge[1]] = [edge[0]]
-            else:
-                edgesHash[edge[1]].append(edge[0])
-                
+            edgesHash[edge[0]].append(edge[1])
+            edgesHash[edge[1]].append(edge[0])
+            
+        components = 0   
         for node in range(n):
             if node in visited:
                 continue
-            self.dFS(edgesHash, visited, node)
-            numOfConnectedComponents += 1
-        
-        return numOfConnectedComponents
+            self.dfs(node, edgesHash, visited, visiting, -1)
+            components += 1
+            
+        return components
     
-    
-    
-    def dFS(self, edgesHash, visited, node):
-        if node in visited:
-            return 
-        
-        visited.add(node)
-        
-        if node not in edgesHash:
+    def dfs(self, node, edgesHash, visited, visiting, prevNode):
+        if node in visited or node in visiting:
             return
         
+        visiting.add(node)
+        
         for neighbor in edgesHash[node]:
-            self.dFS(edgesHash, visited, neighbor)
+            if neighbor == prevNode:
+                continue
+            self.dfs(neighbor, edgesHash, visited, visiting, node)
             
-        return 
+        visited.add(node)
+        visiting.remove(node)
+        
+        return
