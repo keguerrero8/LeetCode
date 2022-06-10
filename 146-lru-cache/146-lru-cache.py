@@ -1,41 +1,4 @@
-class LRUCache(object):
-
-    def __init__(self, capacity):
-        self.capacity = capacity
-        self.currentCap = 0
-        self.cache = {}
-        self.head = DoubleLinkedListNode(None, None)
-        self.tail = DoubleLinkedListNode(None, None)
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        
-
-    def get(self, key):
-        if key not in self.cache:
-            return -1
-        else:
-            nodeToRemove = self.cache[key]
-            nodeToRemove.removeBindings()
-            self.tail.addToEnd(nodeToRemove)
-            return nodeToRemove.value
-        
-
-    def put(self, key, value):
-        if key in self.cache:
-            nodeToUpdate = self.cache[key]
-            nodeToUpdate.value = value
-            nodeToUpdate.removeBindings()
-            self.tail.addToEnd(nodeToUpdate)
-        else:
-            if self.currentCap >= self.capacity:
-                nodeToRemove = self.head.next
-                nodeToRemove.removeBindings()
-                del self.cache[nodeToRemove.key]
-            self.cache[key] = DoubleLinkedListNode(key, value)
-            self.tail.addToEnd(self.cache[key])
-            self.currentCap += 1
-            
-class DoubleLinkedListNode:
+class DoublyLLNode:
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -43,16 +6,56 @@ class DoubleLinkedListNode:
         self.prev = None
         
     def removeBindings(self):
-        self.prev.next = self.next
+        #remove node bindings, 
+        #None -> <- 1 -> <- None
         self.next.prev = self.prev
-        self.next = None
-        self.prev = None
+        self.prev.next = self.next
+        self.prev = self.next = None
+    
+    def insertNodeToTail(self, nodeToInsert):
+        self.prev.next = nodeToInsert
+        nodeToInsert.prev = self.prev
+        self.prev = nodeToInsert
+        nodeToInsert.next = self
+
+class LRUCache(object):
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.currentCapacity = 0
+        self.cache = {}
+        self.LRUHead = DoublyLLNode(None, None)
+        self.LRUTail = DoublyLLNode(None, None)
+        self.LRUHead.next = self.LRUTail
+        self.LRUTail.prev = self.LRUHead
+
+    def get(self, key):
+        #get value of of key from hashmap
+        #whatever key is gotten, need to move to front of LRU
+        #if key does not exist, return -1
+        if key not in self.cache:
+            return -1
+        self.cache[key].removeBindings()
+        self.LRUTail.insertNodeToTail(self.cache[key])
+        return self.cache[key].value
         
-    def addToEnd(self, nodeToAdd):
-        self.prev.next = nodeToAdd
-        nodeToAdd.prev = self.prev
-        self.prev = nodeToAdd
-        nodeToAdd.next = self
+
+    def put(self, key, value):
+        if key in self.cache:
+            self.cache[key].value = value
+            self.cache[key].removeBindings()
+            self.LRUTail.insertNodeToTail(self.cache[key])
+            return
+        else:
+            if self.currentCapacity >= self.capacity:
+                del self.cache[self.LRUHead.next.key]
+                self.LRUHead.next.removeBindings()
+        self.currentCapacity += 1
+        self.cache[key] = DoublyLLNode(key, value)
+        self.LRUTail.insertNodeToTail(self.cache[key])
+        #check if key exists, 
+            #if it does update its key value pair
+            #if it doesnt, or else, check capacity, if current cap is > than cap, need to remove LRU node and remove key from cache
+        #add new key, value pair to LRU cache
         
 
 
