@@ -2,24 +2,18 @@ class Solution(object):
     def lengthOfLongestSubstring(self, s):
         if s == "":
             return 0
-        longestLength = 0
-        hashWords = {}
+        charMap = {}
         start = end = 0
+        longestIdx = [0,0]
 
         while end < len(s):
-            if s[end] not in hashWords:
-                hashWords[s[end]] = end
-            else:
-                if hashWords[s[end]] >= start:
-                    if end - 1 - start > longestLength:
-                        longestLength = end - 1 - start
-                    start = hashWords[s[end]] + 1
-                hashWords[s[end]] = end
-
+            if s[end] in charMap:
+                if charMap[s[end]] >= start:
+                    start = charMap[s[end]] + 1
+            charMap[s[end]] = end  
+            if end - start > longestIdx[1] - longestIdx[0]:
+                    longestIdx = [start, end]
             end += 1
 
-        if end - 1 - start > longestLength:
-            longestLength = end - 1 - start
-
-        return longestLength + 1
+        return longestIdx[1] - longestIdx[0] + 1
         
