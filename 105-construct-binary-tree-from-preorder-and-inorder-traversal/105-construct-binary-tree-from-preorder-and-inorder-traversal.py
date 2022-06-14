@@ -7,8 +7,6 @@
 class Solution(object):
     def buildTree(self, preorder, inorder):
         inOrderHash = { inorder[i] : i for i in range(len(inorder))}
-        # for i in range(len(inorder)):
-        #     inOrderHash[inorder[i]] = i
         return self.buildTreeHelper(preorder, inorder, inOrderHash, 0, len(preorder) - 1, 0, len(inorder) - 1)
     
     
