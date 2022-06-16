@@ -1,34 +1,34 @@
 class Solution(object):
     def countComponents(self, n, edges):
-        if n == 1: return 1
-        visited = set()
-        visiting = set()
-        edgesHash = { i:[] for i in range(n) }
-        for edge in edges:
-            edgesHash[edge[0]].append(edge[1])
-            edgesHash[edge[1]].append(edge[0])
-            
-        components = 0   
-        for node in range(n):
-            if node in visited:
-                continue
-            self.dfs(node, edgesHash, visited, visiting, -1)
-            components += 1
-            
-        return components
-    
-    def dfs(self, node, edgesHash, visited, visiting, prevNode):
-        if node in visited or node in visiting:
-            return
+        parent = [i for i in range(n)]
+        rank = [1 for i in range(n)]
         
-        visiting.add(node)
-        
-        for neighbor in edgesHash[node]:
-            if neighbor == prevNode:
-                continue
-            self.dfs(neighbor, edgesHash, visited, visiting, node)
+        #find function will find root parent of the node, and also perform path compression
+        def find(node):
+            res = node
             
-        visited.add(node)
-        visiting.remove(node)
+            while res != parent[res]:
+                parent[res] = parent[parent[res]]
+                res = parent[res]
+                
+            return res
         
-        return
+        def union(n1, n2):
+            p1, p2 = find(n1), find(n2)
+            
+            if p1 == p2:
+                return 0
+            
+            if rank[p2] > rank[p1]:
+                parent[p1] = p2
+                rank[p2] += rank[p1]
+            else:
+                parent[p2] = p1
+                rank[p1] += rank[p2]
+            return 1
+        
+        res = n
+        for n1, n2 in edges:
+            res -= union(n1, n2)
+            
+        return res
