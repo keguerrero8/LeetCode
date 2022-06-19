@@ -31,26 +31,6 @@ class Solution(object):
                 dfs(row, col, trie, "")
         return list(res)
 
-
-#     def getNeighbors(self, row, col, trie, visiting, board):
-#         neighbors = []
-
-#         if col - 1 >= 0 and board[row][col-1] in trie.root and (row, col-1) not in visiting:
-#             neighbors.append([row, col-1])
-
-#         if col + 1 < len(board[0]) and board[row][col+1] in trie.root and (row, col+1) not in visiting:
-#             neighbors.append([row, col+1])
-
-#         if row - 1 >= 0 and board[row-1][col] in trie.root and (row-1, col) not in visiting:
-#             neighbors.append([row-1, col])
-
-#         if row + 1 < len(board) and board[row+1][col] in trie.root and (row+1, col) not in visiting:
-#             neighbors.append([row+1, col])
-
-#         return neighbors
-
-
-
 class TrieNode:
     def __init__(self):
         self.children = {}
