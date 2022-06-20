@@ -6,14 +6,11 @@ class Solution(object):
             remainder = time[i] % 60
             pairToMatch = 60 - remainder
             if remainder == 0 and 0 in hashRems:
-                songPairs += len(hashRems[0])
+                songPairs += hashRems[0]
             elif pairToMatch in hashRems:
-                songPairs += len(hashRems[pairToMatch])
+                songPairs += hashRems[pairToMatch]
                 
-            if remainder not in hashRems:
-                hashRems[remainder] = [i]
-            else:
-                hashRems[remainder].append(i)
+            hashRems[remainder] = 1 + hashRems.get(remainder, 0)
                 
         return songPairs
             
