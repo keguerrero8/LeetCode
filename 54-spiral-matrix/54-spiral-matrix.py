@@ -1,39 +1,39 @@
 class Solution(object):
     def spiralOrder(self, matrix):
-        l = 0
-        r = len(matrix[0]) - 1
-        top = 0
-        bottom = len(matrix) - 1
-        result = []
-        
-        while l <= r and top <= bottom:
-            i = l
-            while i <= r:
-                result.append(matrix[top][i])
-                i += 1
-                
-            i = top + 1
-            while i < bottom:
-                result.append(matrix[i][r])
-                i += 1
-                
-            i = r
-            while i >= l:
-                if bottom == top:
-                    break
-                result.append(matrix[bottom][i])
-                i -= 1
-                
-            i = bottom - 1
-            while i > top:
-                if l == r:
-                    break
-                result.append(matrix[i][l])
-                i -= 1
-                
-            l += 1
-            r -= 1
-            top += 1
-            bottom -= 1
+        L, R = 0, len(matrix[0]) - 1
+        T, B = 0, len(matrix) - 1
+        res = []
+        while L <= R and T <= B:
             
-        return result
+            i = L
+            while i <= R:
+                res.append(matrix[T][i])
+                i += 1
+                
+            i = T + 1
+            while i <= B:
+                res.append(matrix[i][R])
+                i += 1
+                
+            i = R - 1
+            while i >= L:
+                if T == B:
+                    break
+                res.append(matrix[B][i])
+                i -= 1
+                
+            i = B - 1
+            while i > T:
+                if L == R:
+                    break
+                res.append(matrix[i][L])
+                i -= 1
+                
+            L += 1
+            R -= 1
+            T += 1
+            B -= 1
+            
+        return res
+                
+                
