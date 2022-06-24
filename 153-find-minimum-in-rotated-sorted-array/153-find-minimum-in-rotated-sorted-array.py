@@ -1,17 +1,22 @@
 class Solution(object):
     def findMin(self, nums):
-        start = 0
-        end = len(nums)-1
+        l, r = 0, len(nums)-1
+        minVal = float("inf")
         
-        if nums[end] > nums[start] or len(nums) == 1:
-            return nums[0]
-        
-        while start < end:
-            mid = (start + end) // 2
-            if nums[mid] > nums[start]:
-                start = mid
-            elif nums[mid] < nums[start]:
-                end = mid
+        while l <= r:
+            mid = (l+r) // 2
+            minVal = min(minVal, nums[mid])
+            
+            if nums[mid] >= nums[l]:
+                if nums[l] > nums[r]:
+                    l = mid+1
+                else:
+                    r = mid-1
             else:
-                return min(nums[end], nums[start])
+                if nums[l] > nums[r]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+                    
+        return minVal
         
