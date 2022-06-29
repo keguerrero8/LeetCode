@@ -1,24 +1,21 @@
 class Solution(object):
-    def generateParenthesis(self, n):
-        result = []
-        stack = []
-        self.generateParenthesisHelper(0, 0, result, stack, n)
-        return result
-    
-    def generateParenthesisHelper(self, openN, closeN, result, stack, n):
-        if openN == closeN == n:
-            result.append("".join(stack))
-            return
-        
-        if closeN < openN:
-            stack.append(")")
-            self.generateParenthesisHelper(openN, closeN+1, result, stack, n)
-            stack.pop()
+    def generateParenthesis(self, n, pairs = None, openP = 0, closeP = 0, stack = None):
+        if pairs == None:
+            pairs = []
+            stack = []
             
-        if openN < n:
+        if openP == n and closeP == n:
+            pairs.append("".join(stack))
+            return pairs
+        
+        if openP >= closeP and openP < n:
             stack.append("(")
-            self.generateParenthesisHelper(openN + 1, closeN, result, stack, n)
+            self.generateParenthesis(n, pairs, openP+1, closeP, stack)
             stack.pop()
             
-        return
-        
+        if closeP < openP and closeP < n:
+            stack.append(")")
+            self.generateParenthesis(n, pairs, openP, closeP+1, stack)
+            stack.pop()
+            
+        return pairs
