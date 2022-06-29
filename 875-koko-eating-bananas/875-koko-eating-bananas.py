@@ -1,28 +1,23 @@
-class Solution(object):
-    def minEatingSpeed(self, piles, h):
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
         upperB = max(piles)
         lowerB = 1
             
         def eatBananasWithRate(rate):
             currentHours = 0
             for val in piles:
-                while val > 0:
-                    v = val // rate
-                    if v == 0:
-                        v = 1
-                    currentHours += v
-                    val -= v*rate
+                currentHours += math.ceil(val/rate)
             return currentHours
             
-        k = float("inf")
+        res = max(piles)
         while lowerB <= upperB:
-            mid = (lowerB + upperB) // 2
-            hours = eatBananasWithRate(mid)
+            k = (lowerB + upperB) // 2
+            hours = eatBananasWithRate(k)
             if hours <= h:
-                k = min(k, mid)
-                upperB = mid - 1
+                res = min(res, k)
+                upperB = k - 1
             else:
-                lowerB = mid + 1
+                lowerB = k + 1
                 
-        return k
+        return res
         
