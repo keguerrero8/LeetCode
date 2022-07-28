@@ -6,9 +6,7 @@
 var threeSumClosest = function(nums, target) {
     let res = Infinity
     let delta = Infinity
-    nums.sort(function(a, b) {
-        return a - b;
-    })
+    nums.sort((a, b) => a - b)
     
     for (let i = 0; i < nums.length - 2; i++) {
         let l = i + 1
@@ -20,11 +18,10 @@ var threeSumClosest = function(nums, target) {
                 res = currentSum
                 delta = currentDelta
             }
+            
             if (currentSum === target) return res
             else if (currentSum < target) l += 1
-            else {
-                r -= 1
-            }  
+            else r -= 1
         }
         
     }
