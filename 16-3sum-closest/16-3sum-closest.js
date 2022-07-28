@@ -20,11 +20,9 @@ var threeSumClosest = function(nums, target) {
                 res = currentSum
                 delta = currentDelta
             }
-            if (currentSum === target) {
-                return res
-            } else if (currentSum < target) {
-                l += 1
-            } else {
+            if (currentSum === target) return res
+            else if (currentSum < target) l += 1
+            else {
                 r -= 1
             }  
         }
