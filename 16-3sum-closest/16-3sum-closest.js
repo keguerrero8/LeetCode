@@ -14,8 +14,8 @@ var threeSumClosest = function(nums, target) {
         let l = i + 1
         let r = nums.length - 1
         while (l < r) {
-            let currentSum = nums[i] + nums[l] + nums[r]
-            let currentDelta = Math.abs(target - currentSum)
+            const currentSum = nums[i] + nums[l] + nums[r]
+            const currentDelta = Math.abs(target - currentSum)
             if (currentDelta < delta) {
                 res = currentSum
                 delta = currentDelta
