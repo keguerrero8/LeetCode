@@ -2,38 +2,37 @@ class Solution(object):
     def fourSum(self, nums, target):
         nums.sort()
         res = []
-        base = []
+        possibleQuad = []
+        self.kSum(0, 4, nums, res, target, possibleQuad)
+        return res
         
-        def findSumCombinations(num, start, target):
-            if num == 2:
-                self.twoSum(start, res, base, nums, target)
-                return
-            
-            end = len(nums) - num + 1
-            for i in range(start, end):
+    def kSum(self, start, k, nums, res, target, possibleQuad):
+        if k == 2:
+            self.twoSum(start, nums, res, target, possibleQuad)
+        else:
+            for i in range(start, len(nums) - k + 1):
                 if i > start and nums[i] == nums[i-1]:
                     continue
-                newSum = target - nums[i]
-                base.append(nums[i])
-                findSumCombinations(num - 1, i + 1, newSum)
-                base.pop()
-            return res
-        
-        return findSumCombinations(4, 0, target)
-    
-    def twoSum(self, start, res, base, nums, target):
+                newTarget = target - nums[i]
+                possibleQuad.append(nums[i])
+                self.kSum(i + 1, k-1, nums, res, newTarget, possibleQuad)
+                possibleQuad.pop()
+                
+    def twoSum(self, start, nums, res, target, possibleQuad):
         l, r = start, len(nums) - 1
         
         while l < r:
-            total = nums[l] + nums[r]
-            if total == target:
-                res.append(base + [nums[l], nums[r]])
+            currentSum = nums[l] + nums[r]
+            if currentSum == target:
+                res.append(possibleQuad + [nums[l], nums[r]])
                 l += 1
                 while l < r and nums[l] == nums[l-1]:
                     l += 1
-            elif total < target:
+            elif currentSum < target:
                 l += 1
             else:
                 r -= 1
-    
+                
+
+            
         
