@@ -5,22 +5,20 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def maxPathSum(self, root):
-        res = [root.val]
-        
-        def dfs(root):
-            if not root:
-                return 0
-            leftMax = dfs(root.left)
-            rightMax = dfs(root.right)
-            leftMax = max(leftMax, 0)
-            rightMax = max(rightMax, 0)
-            
-            res[0] = max(res[0], root.val + leftMax + rightMax)
-            
-            return root.val + max(leftMax, rightMax)
-        
-        dfs(root)
-        return res[0]
+    def maxPathSum(self, tree):
+        def maxPathSumHelper(tree):
+            if tree is None:
+                return (0, float("-inf"))
+
+            LS, LF = maxPathSumHelper(tree.left)
+            RS, RF = maxPathSumHelper(tree.right)
+
+            singleBranchMax = max(tree.val, tree.val + max(LS, RS))
+            fullTreeMax = max(singleBranchMax, tree.val + LS + RS)
+            finalTreeMax = max(fullTreeMax, LF, RF)
+
+            return (singleBranchMax, finalTreeMax)
+        branchMax, fullTreeMax = maxPathSumHelper(tree)
+        return max(branchMax, fullTreeMax)
 
         
