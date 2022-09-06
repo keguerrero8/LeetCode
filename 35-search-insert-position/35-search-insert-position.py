@@ -12,11 +12,7 @@ class Solution(object):
             else:
                 r = mid - 1
         
-        if l > r:
-            return r + 1
-        
-        if r < l:
-            return l - 1 if l-1 > 0 else 0
+        return l
         
         
         
