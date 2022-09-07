@@ -6,31 +6,36 @@
 #         self.right = right
 class Solution(object):
     def levelOrder(self, root):
-        def levelOrderHelper(node, levelHash, level):
-            if node is None:
-                return
+        if root is None:
+            return []
+        
+        q = [[root, 0]]
+        levelHash = {}
+        
+        while q:
+            
+            node, level = q.pop(0)
+            
+            if node.left:
+                q.append([node.left, level + 1])
+                
+            if node.right:
+                q.append([node.right, level + 1])
+            
             if level not in levelHash:
                 levelHash[level] = [node.val]
             else:
                 levelHash[level].append(node.val)
                 
-            levelOrderHelper(node.left, levelHash, level + 1)
-            levelOrderHelper(node.right, levelHash, level + 1)
-            
-        if root is None:
-            return []
-        if root.left is None and root.right is None:
-            return [[root.val]]
-        
-        levelHash = {}
-        levelOrderHelper(root, levelHash, 0)
-        result = []
+        minLevel = float("inf")
         maxLevel = float("-inf")
-        for level in levelHash:
-            if level > maxLevel:
-                maxLevel = level
-        
-        for i in range(maxLevel + 1):
-            result.append(levelHash[i])
+        for key in levelHash.keys():
+            maxLevel = max(maxLevel, key)
+            minLevel = min(minLevel, key)
             
-        return result
+        res = []
+        for i in range(minLevel, maxLevel + 1):
+            res.append(levelHash[i])
+            
+        return res
+            
