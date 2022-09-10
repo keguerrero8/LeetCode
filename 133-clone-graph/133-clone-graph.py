@@ -7,21 +7,25 @@ class Node(object):
 """
 
 class Solution(object):
-    def cloneGraph(self, node, clonedHash = None):
+    def cloneGraph(self, node):
         if node is None:
             return None
-        if clonedHash == None:
-            clonedHash = {}
-            
-        if node.val in clonedHash:
-            return clonedHash[node.val]
         
-        clone = Node(node.val)
-        clonedHash[node.val] = clone
+        cloneMap = {}
         
-        for neighbor in node.neighbors:
-            cloneNeighbor = self.cloneGraph(neighbor, clonedHash)
-            clone.neighbors.append(cloneNeighbor)
+        def dfs(node):            
+            if node.val in cloneMap:
+                return cloneMap[node.val]
             
-        return clone
+            cloneMap[node.val] = Node(node.val)
+            clone = cloneMap[node.val]
+
+            for neighbor in node.neighbors:
+                clone.neighbors.append(dfs(neighbor))
+
+            return clone
+        
+        return dfs(node)
+    
+        
         
