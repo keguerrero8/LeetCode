@@ -1,18 +1,19 @@
 class Solution(object):
-    def combinationSum(self, candidates, target):                    
-        combinations = []
-        self.combinationSumHelper(0, 0, [], combinations, candidates, target)
-        return combinations
-    
-    
-    def combinationSumHelper(self, total, idx, candidate, combos, candidates, target):
+    def combinationSum(self, candidates, target):
+        total = 0
+        res = []
+        candidate = []
+        self.combinationSumHelper(candidates, target, total, res, candidate, 0)
+        return res
+        
+    def combinationSumHelper(self, candidates, target, total, res, candidate, idx):
         if total == target:
-            combos.append(candidate + [])
+            res.append(candidate + [])
+            return
         elif total > target:
             return
         else:
             for i in range(idx, len(candidates)):
-                newCandidate = candidate + [candidates[i]] #[2], combos(0+2, 0, [2]) -> [2, 2], combos(4, 0, [2,2])
-                self.combinationSumHelper(total + candidates[i], i, newCandidate, combos, candidates, target)
-                newCandidate.pop()
-        
+                candidate.append(candidates[i])
+                self.combinationSumHelper(candidates, target, total + candidates[i], res, candidate, i)
+                candidate.pop()
