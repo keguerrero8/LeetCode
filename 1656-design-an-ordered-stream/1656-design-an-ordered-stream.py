@@ -7,13 +7,11 @@ class OrderedStream(object):
 
     def insert(self, idKey, value):
         self.stream[idKey - 1] = value
-        if self.ptr >= idKey - 1:
-            res = []
-            while self.ptr < len(self.stream) and self.stream[self.ptr] != 0:
-                res.append(self.stream[self.ptr])
-                self.ptr += 1
-            return res
-        return []
+        res = []
+        while self.ptr < len(self.stream) and self.stream[self.ptr] != 0:
+            res.append(self.stream[self.ptr])
+            self.ptr += 1
+        return res
         
 
 
