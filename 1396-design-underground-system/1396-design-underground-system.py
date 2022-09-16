@@ -5,7 +5,6 @@ class UndergroundSystem:
         self.averageTimes = {}
 
     def checkIn(self, id, stationName, t):
-        #{id: [stationName, t]}
         if id not in self.averageTimes:
             self.checkins[id] = [stationName, t]
         self.checkins[id][0] = stationName
@@ -26,10 +25,7 @@ class UndergroundSystem:
         totalTime = self.averageTimes[startStation][endStation][0]
         count = self.averageTimes[startStation][endStation][1]
         return totalTime/count
-        
-# "checkIn","checkOut","getAverageTime","checkIn","checkOut","getAverageTime","checkIn","getAverageTime","checkIn","getAverageTime","getAverageTime","checkOut"]
 
-# [[37043,"K2618O72",29],[37043,"U1DTINDT",39],["K2618O72","U1DTINDT"],[779975,"K2618O72",112],[779975,"CN3K6CYM",157],["K2618O72","U1DTINDT"],[706901,"K2618O72",221],["K2618O72","CN3K6CYM"],[18036,"K2618O72",258],["K2618O72","U1DTINDT"],["K2618O72","CN3K6CYM"],[18036,"U1DTINDT",293]]
 
 # Your UndergroundSystem object will be instantiated and called as such:
 # obj = UndergroundSystem()
