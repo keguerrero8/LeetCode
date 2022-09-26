@@ -1,13 +1,14 @@
 class Solution(object):
     def wordBreak(self, s, wordDict):
-        wordBreakArray = [False]*(len(s)+1)
-        wordBreakArray[len(s)] = True
-        for i in reversed(range(len(s))):
+        dp = [False for i in range(len(s) + 1)]
+        dp[len(s)] = True
+        
+        for i in range(len(s) - 1, -1, -1):
             for w in wordDict:
-                if len(w) + i <= len(s) and s[i:i+len(w)] == w:
-                    wordBreakArray[i] = wordBreakArray[i+len(w)]
-                
-                if wordBreakArray[i]:
+                if (i + len(w)) <= len(s) and w == s[i:i+len(w)]:
+                    dp[i] = dp[i + len(w)] 
+                if dp[i]:
                     break
-        return wordBreakArray[0]
+        return dp[0]
+            
         
